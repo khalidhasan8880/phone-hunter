@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- bootstrap css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <h2 class="text-center my-5">Welcome to phone Hunter</h2>
+        <!-- search -->
+        <div class="mb-3 px-5 w-25 mx-auto my-5">
+            <input type="search" id="input-field" class="form-control" placeholder="search phone">
+            <button id="search-btn" class="d-block mx-auto btn btn-primary my-2">Search</button>
+        </div>
+        <!-- no found displayer -->
+        <div id="no-phone-found" class="d-none">
+            <h2>No found phone. please try a new search</h2>
+        </div>
+    </header>
+
+
+
+
+    <main class="container">
+        <!-- spinner -->
+        <div id="spinner" style="height: 70vh; width: auto;" class="d-none d-flex align-items-center justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <!--  -->
+        <section>
+            <div id="phone-container" class="row row-cols-1 row-cols-md-3 g-4">
+
+            </div>
+            <div id="see-more" class="d-flex d-none justify-content-center">
+                <button id="see-more-btn" class="btn btn-primary d-block ">see more</button>
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- bootstrap js link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <!-- custom js link -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
