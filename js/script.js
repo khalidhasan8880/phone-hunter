@@ -7,18 +7,18 @@ const loadPhones = async (searchValue, dataLimit) => {
 
 const showPhone = (phones, dataLimit) => {
     // slice 
-   
+
     // delete previous card from phone container 
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.innerHTML = '';
     // no result displayer 
     const noFound = document.getElementById('no-phone-found');
     const seeMore = document.getElementById('see-more');
-    
+
     if (phones.length === 0) {
         noFound.classList.remove('d-none');
     }
-    else{
+    else {
         noFound.classList.add('d-none');
     }
 
@@ -26,12 +26,12 @@ const showPhone = (phones, dataLimit) => {
         phones = phones.slice(0, 10);
         seeMore.classList.remove('d-none');
     }
-    else{
+    else {
         seeMore.classList.add('d-none')
     }
     // looping every phone with foreach
     phones.forEach(phone => {
-        const {brand, image, phone_name, slug}  = phone
+        const { brand, image, phone_name, slug } = phone
         console.log(phone);
         const col = document.createElement('div');
         col.classList.add('col');
@@ -41,7 +41,10 @@ const showPhone = (phones, dataLimit) => {
             <div class="card-body">
                 <h5 class="card-title">${phone_name}</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in
-                    to additional content. This content is a little bit longer.</p>
+                to additional content. This content is a little bit longer.
+                </p>
+                <button onclick="details('${phone.slug}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneModal">Details</button>
+
             </div>
         </div>
         `
@@ -53,6 +56,14 @@ const showPhone = (phones, dataLimit) => {
 document.getElementById('search-btn').addEventListener('click', function () {
     proccessFunc(10)
 })
+document.getElementById('input-field').addEventListener('keypress', function (e) {
+    console.log(e.key);
+    if (e.key == "Enter") {
+        proccessFunc(10);
+    }
+})
+
+
 function proccessFunc(dataLimit) {
     spinnerOnOff(true);
     const searchValue = document.getElementById('input-field').value;
@@ -67,10 +78,46 @@ function spinnerOnOff(isLoading) {
     if (isLoading) {
         spinner.classList.remove('d-none')
     }
-    else{
+    else {
         spinner.classList.add('d-none')
     }
 }
-// loadPhones()
+
+async function details(id) {
+    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    showDetails(data.data)
+}
+
+const showDetails = (data) => {
+
+    console.log(data)
+    const {brand, name, releaseDate} = data;
+    const phoneModal = document.getElementById('phoneModal');
+    phoneModal.innerHTML = '';
+    const modalDialogDiv = document.createElement('div');
+    modalDialogDiv.classList.add('modal-dialog')
+    modalDialogDiv.innerHTML = `
+    <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="phoneModalLabel">${brand}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <h3>${name}</h3>
+                <p>${releaseDate}</p>
+                
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+    `
+    phoneModal.appendChild(modalDialogDiv);
+
+}
+// loadPhones('apple')
 
 // ${}
