@@ -1,4 +1,7 @@
 const loadPhones = async (searchValue, dataLimit) => {
+    if(searchValue == ''){
+        searchValue = 'apple'
+    }
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchValue}`);
     const data = await res.json();
     showPhone(data.data, dataLimit);
@@ -93,6 +96,8 @@ const showDetails = (data) => {
 
     console.log(data)
     const {brand, name, releaseDate} = data;
+    const {storage, displaySize, chipSet} = data.mainFeatures;
+    const {Bluetooth, GPS, NFC} = data.others;
     const phoneModal = document.getElementById('phoneModal');
     phoneModal.innerHTML = '';
     const modalDialogDiv = document.createElement('div');
@@ -104,20 +109,29 @@ const showDetails = (data) => {
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <h3>${name}</h3>
-                <p>${releaseDate}</p>
-                
-
+                <div>
+                    <h5>Main Features</h5>
+                    <h3>${name}</h3>
+                    <p>Release Date: ${ releaseDate ? releaseDate : 'no release data found'}</p>
+                    <p>Storage: ${storage}</p>
+                    <p>Display Size : ${displaySize}</p>
+                    <p>chipSet : ${chipSet}</p>
+                </div>
+                <div>
+                    <h5>Others Features</h5>
+                    <p>Bluetooth: ${ Bluetooth ? Bluetooth : 'no release data found'}</p>
+                    <p>GPS: ${ GPS ? GPS : 'no release data found'}</p>
+                    <p>NFC: ${ NFC ? NFC : 'no release data found'}</p>
+                </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
     `
     phoneModal.appendChild(modalDialogDiv);
 
 }
-// loadPhones('apple')
+loadPhones('apple', 10)
 
 // ${}
